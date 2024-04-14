@@ -7,7 +7,7 @@ class Gapps(General):
     dl_links = {
             "x86_64": ["https://cfhcable.dl.sourceforge.net/project/opengapps/x86_64/20220503/open_gapps-x86_64-10.0-pico-20220503.zip", "5fb186bfb7bed8925290f79247bec4cf"],
             "x86": ["https://udomain.dl.sourceforge.net/project/opengapps/x86/20220122/open_gapps-x86-10.0-pico-20220122.zip", "9e39e45584b7ade4529e6be654af7b81"],
-            "arm64-v8a": ["https://liquidtelecom.dl.sourceforge.net/project/opengapps/arm64/20220122/open_gapps-arm64-10.0-pico-20220122.zip", "8dfa6e76aeb2d1d5aed40b058e8a852c"],
+            "arm64-v8a": ["https://webwerks.dl.sourceforge.net/project/opengapps/arm64/20220503/open_gapps-arm64-11.0-pico-20220503.zip", "67e927e4943757f418e4f934825cf987"],
             "armeabi-v7a": ["https://nav.dl.sourceforge.net/project/opengapps/arm/20220122/open_gapps-arm-10.0-pico-20220122.zip", "a48ccbd25eb0a3c5e30f5db5435f5536"]
         }
     arch = host()
@@ -20,11 +20,14 @@ class Gapps(General):
     non_apks = [
         "defaultetc-common.tar.lz",
         "defaultframework-common.tar.lz",
-        "googlepixelconfig-common.tar.lz"
+        "googlepixelconfig-common.tar.lz",
+        "vending-common.tar.lz"
         ]
     skip = [
         "setupwizarddefault-x86_64.tar.lz",
-        "setupwizardtablet-x86_64.tar.lz"
+        "setupwizardtablet-x86_64.tar.lz",
+        "setupwizarddefault-arm64.tar.lz",
+        "setupwizardtablet-arm64.tar.lz"
         ]
 
     def download(self):
