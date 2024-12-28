@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 
 import argparse
-from stuffs.gapps import Gapps
-from stuffs.magisk import Magisk
-from stuffs.ndk import Ndk
-from stuffs.widevine import Widevine
+from stuff.gapps import Gapps
+from stuff.litegapps import LiteGapps
+from stuff.magisk import Magisk
+from stuff.mindthegapps import MindTheGapps
+from stuff.ndk import Ndk
+from stuff.widevine import Widevine
 import tools.helper as helper
 import subprocess
 
@@ -23,9 +25,17 @@ def main():
                         dest='gapps',
                         help='Install OpenGapps to ReDroid',
                         action='store_true')
+    parser.add_argument('-lg', '--install-litegapps',
+                        dest='litegapps',
+                        help='Install LiteGapps to ReDroid',
+                        action='store_true')
     parser.add_argument('-n', '--install-ndk-translation',
                         dest='ndk',
                         help='Install libndk translation files',
+                        action='store_true')
+    parser.add_argument('-mtg', '--install-mindthegapps',
+                        dest='mindthegapps',
+                        help='Install MindTheGapps to ReDroid',
                         action='store_true')
     parser.add_argument('-m', '--install-magisk', dest='magisk',
                         help='Install Magisk ( Bootless )',
@@ -45,9 +55,20 @@ def main():
             args.android)
     tags.append(args.android)
     if args.gapps:
-        Gapps().install()
-        dockerfile = dockerfile + "COPY gapps /\n"
-        tags.append("gapps")
+        if args.android in ["11.0.0"]:
+            Gapps().install()
+            dockerfile = dockerfile + "COPY gapps /\n"
+            tags.append("gapps")
+        else:
+            helper.print_color( "WARNING: OpenGapps only supports 11.0.0", helper.bcolors.YELLOW)
+    if args.litegapps:
+        LiteGapps(args.android).install()
+        dockerfile = dockerfile + "COPY litegapps /\n"
+        tags.append("litegapps")
+    if args.mindthegapps:
+        MindTheGapps(args.android).install()
+        dockerfile = dockerfile + "COPY mindthegapps /\n"
+        tags.append("mindthegapps")
     if args.ndk:
         if args.android in ["11.0.0", "12.0.0", "12.0.0_64only"]:
             arch = helper.host()[0]
